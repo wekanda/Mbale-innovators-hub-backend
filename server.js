@@ -7,7 +7,7 @@ const connectDB = require('./config/db');
 
 // Import route files
 const authRoutes = require('./routes/auth');
-const projectRoutes = require('./routes/projects');
+const projectRoutes = require('./routes/projects'); // This line is correct
 const userRoutes = require('./routes/userRoutes'); // Import the user routes
 
 // Initialize dotenv
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 
 // Mount routers
 app.use('/api/auth', authRoutes);
-app.use('/api/projects', projectRoutes); // <-- AND ADD THIS
+app.use('/api/projects', projectRoutes);
 app.use('/api/users', userRoutes); // Mount the user routes
 
 const PORT = process.env.PORT || 5000;
