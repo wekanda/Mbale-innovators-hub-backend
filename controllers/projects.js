@@ -99,10 +99,10 @@ exports.getProjectById = async (req, res) => {
     }
 
     // Check if the project is approved
-    const isApproved = project.status === 'approved';
-    // Check if a user is logged in and is the author or an admin/supervisor
-    const isAuthor = req.user ? project.user._id.toString() === req.user.id : false;
-    const isPrivileged = req.user ? ['supervisor', 'admin'].includes(req.user.role) : false;
+    const isApproved = project.status === 'approved'; // Is the project public?
+    // Check if a user is logged in and has special permissions
+    const isAuthor = req.user && project.user._id.toString() === req.user.id;
+    const isPrivileged = req.user && ['supervisor', 'admin'].includes(req.user.role);
 
     // A project can be viewed if it's approved, OR if the viewer is the author, OR if the viewer is a supervisor/admin.
     if (isApproved || isAuthor || isPrivileged) {
@@ -292,56 +292,6 @@ exports.updateProjectStatus = async (req, res) => {
       new: true,
       runValidators: true,
     });
-
-    res.status(200).json({ success: true, data: project });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Server Error' });
-  }
-};
-
-// @desc    Approve a project
-// @route   PUT /api/projects/:id/approve
-// @access  Private (Supervisor, Admin)
-exports.approveProject = async (req, res) => {
-  try {
-    const project = await Project.findByIdAndUpdate(
-      req.params.id,
-      { status: 'approved', supervisorComment: '' }, // Clear any previous comment
-      { new: true, runValidators: true }
-    );
-
-    if (!project) {
-      return res.status(404).json({ success: false, message: 'Project not found' });
-    }
-
-    res.status(200).json({ success: true, data: project });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Server Error' });
-  }
-};
-
-// @desc    Reject a project
-// @route   PUT /api/projects/:id/reject
-// @access  Private (Supervisor, Admin)
-exports.rejectProject = async (req, res) => {
-  try {
-    const { comment } = req.body;
-
-    if (!comment) {
-      return res.status(400).json({ success: false, message: 'Rejection comment is required' });
-    }
-
-    const project = await Project.findByIdAndUpdate(
-      req.params.id,
-      { status: 'rejected', supervisorComment: comment },
-      { new: true, runValidators: true }
-    );
-
-    if (!project) {
-      return res.status(404).json({ success: false, message: 'Project not found' });
-    }
 
     res.status(200).json({ success: true, data: project });
   } catch (err) {
