@@ -7,7 +7,8 @@ const connectDB = require('./config/db');
 
 // Import route files
 const authRoutes = require('./routes/auth');
-const projectRoutes = require('./routes/projects'); // <-- ADD THIS
+const projectRoutes = require('./routes/projects');
+const userRoutes = require('./routes/userRoutes'); // Import the user routes
 
 // Initialize dotenv
 dotenv.config();
@@ -30,9 +31,20 @@ app.get('/', (req, res) => {
 // Mount routers
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes); // <-- AND ADD THIS
+app.use('/api/users', userRoutes); // Mount the user routes
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Handle unhandled promise rejections and other cleanup
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  // Close server & exit process
+  server.close(() => process.exit(1));
+});
+
+// Graceful shutdown for nodemon restarts
+process.on('SIGINT', () => server.close(() => process.exit(0)));

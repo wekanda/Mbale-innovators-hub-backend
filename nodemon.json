@@ -1,3 +1,5 @@
 {
-  "signal": "SIGINT"
+  "watch": ["src/"],
+  "ext": "js,json",
+  "ignore": ["uploads/*"]
 }
