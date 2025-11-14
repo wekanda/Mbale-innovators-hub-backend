@@ -1,16 +1,11 @@
-// src/config/db.js
-
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('MongoDB Connected...');
+    const conn = await mongoose.connect(process.env.MONGO_URI); // The options are deprecated and can be removed
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (err) {
-    console.error(err.message);
+    console.error(`Error connecting to MongoDB: ${err.message}`);
     // Exit process with failure
     process.exit(1);
   }
