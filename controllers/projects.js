@@ -1,4 +1,4 @@
-const Project = require('../models/Project'); // Correct the import
+const Project = require('../models/project'); // Correct the import
 const User = require('../models/User'); // Import User model for faculty filtering
 
 // @desc    Get all approved projects for the public gallery (with filtering & pagination)

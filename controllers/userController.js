@@ -1,6 +1,6 @@
 const User = require('../models/User'); // Adjust path if necessary
 const Project = require('../models/project'); // Import Project model
-const Comment = require('../models/comment'); // Import Comment model
+const Comment = require('../models/Comment'); // Import Comment model
 
 // @desc    Get all users
 // @route   GET /api/users

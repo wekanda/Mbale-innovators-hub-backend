@@ -1,5 +1,5 @@
 const Comment = require('../models/Comment'); // Corrected: Capital 'C' in Comment
-const Project = require('../models/project'); // This should be correct now
+const Project = require('../models/project'); // This is correct
 
 // @desc    Get comments for a project
 // @route   GET /api/projects/:projectId/comments
