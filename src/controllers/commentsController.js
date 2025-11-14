@@ -1,5 +1,5 @@
-const Comment = require('../models/Comment');
-const Project = require('../models/Project');
+const Comment = require('../models/comment');
+const Project = require('../models/project');
 
 // @desc    Get comments for a project
 // @route   GET /api/projects/:projectId/comments
