@@ -15,7 +15,7 @@ const {
   approveProject,
   rejectProject,
   getProjectStats
-} = require('../../controllers/projects.js');
+} = require('../../controllers/projects');
 const { protect, authorize, optionalProtect } = require('../middleware/auth');
 
 // Configure multer for file storage. This will create an 'uploads' folder at the root of your project.
