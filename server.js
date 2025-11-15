@@ -3,12 +3,12 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./config/db');
+const connectDB = require('../config/db');
 
 // Import route files
-const authRoutes = require('./src/routes/auth');
-const projectRoutes = require('./src/routes/projects');
-const userRoutes = require('./src/routes/userRoutes');
+const authRoutes = require('./routes/auth');
+const projectRoutes = require('./routes/projects');
+const userRoutes = require('./routes/userRoutes');
 
 // Initialize dotenv
 dotenv.config();
