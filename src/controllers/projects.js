@@ -28,8 +28,38 @@ exports.createProject = async (req, res) => {
 // @access  Public
 exports.getProjects = async (req, res) => {
 	try {
-		const projects = await Project.find().populate({ path: 'user', select: 'name' });
-		res.status(200).json({ success: true, count: projects.length, data: projects });
+		const { page = 1, limit = 9, search = '', status = '' } = req.query;
+		const pageNum = parseInt(page) || 1;
+		const limitNum = parseInt(limit) || 9;
+		const skip = (pageNum - 1) * limitNum;
+
+		// Build filter
+		const filter = {};
+		if (status && status !== 'all') {
+			filter.status = status;
+		}
+		if (search) {
+			filter.$or = [
+				{ title: { $regex: search, $options: 'i' } },
+				{ description: { $regex: search, $options: 'i' } }
+			];
+		}
+
+		const total = await Project.countDocuments(filter);
+		const projects = await Project.find(filter)
+			.populate({ path: 'user', select: 'name' })
+			.skip(skip)
+			.limit(limitNum)
+			.sort({ createdAt: -1 });
+
+		res.status(200).json({
+			success: true,
+			count: projects.length,
+			total,
+			pages: Math.ceil(total / limitNum),
+			currentPage: pageNum,
+			data: projects
+		});
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ success: false, error: 'Server Error' });
