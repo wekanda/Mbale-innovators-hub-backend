@@ -2,7 +2,7 @@ const express = require('express');
 const {
   getComments,
   addComment,
-} = require('../controllers/commentsController.js');
+} = require('../controllers/commentsController');
 
 const { protect } = require('../middleware/auth');
 

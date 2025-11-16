@@ -7,7 +7,7 @@ const connectDB = require('./config/db');
 
 // Import route files
 const authRoutes = require('./routes/auth.js');
-const projectRoutes = require('./projects.js'); // This file is in the root
+const projectRoutes = require('./routes/projects.js');
 const userRoutes = require('./routes/userRoutes.js');
 
 // Initialize dotenv
