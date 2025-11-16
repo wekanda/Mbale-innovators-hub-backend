@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const commentRouter = require('./commentsRoutes.js'); // Import the comment router
+const commentRouter = require('./commentsRoutes'); // Import the comment router
 
 // Import all the required controller functions
 const {
