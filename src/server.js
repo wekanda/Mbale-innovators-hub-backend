@@ -22,9 +22,10 @@ const app = express();
 // Middleware
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL // You will set this in Render
+    ? (process.env.FRONTEND_URL || '*') // Allow any origin if FRONTEND_URL not set
     : 'http://localhost:3000',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -54,3 +55,4 @@ process.on('unhandledRejection', (err, promise) => {
 
 // Graceful shutdown for nodemon restarts
 process.on('SIGINT', () => server.close(() => process.exit(0)));
+//create a login route for user authentication
