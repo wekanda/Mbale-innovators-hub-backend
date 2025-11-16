@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const commentRouter = require('./routes/commentsRoutes.js'); // Import the comment router
+const commentRouter = require('./commentsRoutes'); // Import the comment router
 
 // Import all the required controller functions
 const {
@@ -15,8 +15,8 @@ const {
   approveProject,
   rejectProject,
   getProjectStats
-} = require('../controllers/projects');
-const { protect, authorize, optionalProtect } = require('../middleware/auth');
+} = require('../../controllers/projects.js');
+const { protect, authorize, optionalProtect } = require('../../middleware/auth.js');
 
 // Configure multer for file storage. This will create an 'uploads' folder at the root of your project.
 const upload = multer({ dest: 'uploads/' });
